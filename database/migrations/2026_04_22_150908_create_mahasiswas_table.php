@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('mahasiswas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade');
+            $table->foreignId('jurusan_id')->constrained()->onDelete('cascade');
+            $table->string('nik')->unique();
+            $table->string('npp')->unique();
+            $table->string('alamat');
+            $table->string('ig')->nullable();
+            $table->string('fb')->nullable();
+            $table->string('thread')->nullable();
+            $table->foreignId('province_id')->constrained('indonesia_provinces')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('indonesia_cities')->onDelete('cascade');
+            $table->foreignId('district_id')->constrained('indonesia_districts')->onDelete('cascade');
+            $table->foreignId('village_id')->constrained('indonesia_villages')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('mahasiswas');
+    }
+};
